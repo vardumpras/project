@@ -1,0 +1,100 @@
+imports:
+    - { resource: "@AlcyonCoreBundle/Resources/config/events.yml" }
+
+services:
+
+    alcyon_core.service.cache:
+        class: Alcyon\CoreBundle\Service\Cache
+        arguments: [ '@cache.system']
+
+    alcyon_core.service.mailer:
+        class: Alcyon\CoreBundle\Service\Mailer
+        arguments: [ '@mailer']
+        
+    alcyon_core.service.getdns:
+        class: Alcyon\CoreBundle\Service\GetDns
+        arguments: [ '@request_stack', '@doctrine.orm.entity_manager']
+
+    alcyon_core.service.trydns:
+        class: Alcyon\CoreBundle\Service\TryDns
+        arguments: [ '@alcyon_core.service.getdns']
+
+    alcyon_core.service.gettheme:
+        class: Alcyon\CoreBundle\Service\GetTheme
+        arguments: [ '@doctrine.orm.entity_manager' ]
+
+    alcyon_core.component.listhelper_factory:
+        class: Alcyon\CoreBundle\Component\ListHelper\Factory
+        arguments: [ '@alcyon_core.component.listhelper_registry', '@alcyon_core.component.listhelper_dataresolver', '@form.factory']
+
+    alcyon_core.component.listhelper_registry:
+        class: Alcyon\CoreBundle\Component\ListHelper\Registry
+        public: false
+
+    alcyon_core.component.listhelper_dataresolver:
+        class: Alcyon\CoreBundle\Component\ListHelper\DataResolver
+        public: false
+
+    alcyon_core.component.listhelper_twig_extension:
+        class: Alcyon\CoreBundle\Twig\ListHelper
+        public: false
+        arguments: ["AlcyonCoreBundle:ListHelper:listhelper_layout.html.twig"]
+        tags:
+            - { name: twig.extension }
+
+    alcyon_core.component.menu_factory:
+        class: Alcyon\CoreBundle\Component\Menu\MenuFactory
+        arguments: [ '@router', '@doctrine.orm.entity_manager', '@alcyon_core.service.getdns']
+
+    alcyon_core.service.fileuploader:
+        class: Alcyon\CoreBundle\Service\FileUploader
+        arguments: [ '%uploads_directory%']
+
+    alcyon_core.service.media:
+        class: Alcyon\CoreBundle\Service\Media
+        arguments: [ '@doctrine.orm.entity_manager', '@alcyon_core.service.trydns', '%uploads_directory%']
+
+    alcyon_core.service.uri_to_file:
+        class: Alcyon\CoreBundle\Service\UriToFile
+        arguments: [ '@alcyon_core.service.media', '%uploads_directory%', '%web_directory%']
+
+    alcyon_core.service.slugifyprovider:
+        class: Alcyon\CoreBundle\Service\SlugifyDefaultProvider
+        public: false
+
+    alcyon_core.service.slugify:
+        class: Alcyon\CoreBundle\Service\Slugify
+        arguments: [ [], '@alcyon_core.service.slugifyprovider' ]   
+
+    alcyon_core.service.imagepathtoresource:
+        class: Alcyon\CoreBundle\Service\ImagePathToResource
+
+    alcyon_core.service.resizeimage:
+        class: Alcyon\CoreBundle\Service\ResizeImage
+        arguments: [ '@alcyon_core.service.imagepathtoresource', '@alcyon_core.service.cache']
+
+    alcyon_core.twig.menu:
+        class: Alcyon\CoreBundle\Twig\Menu
+        public: false
+        arguments : ['@request_stack', '@alcyon_core.component.menu_factory' ]
+        tags:
+            - { name: twig.extension }
+
+    alcyon_core.twig.slugify:
+        class: Alcyon\CoreBundle\Twig\Slugify
+        arguments: ['@alcyon_core.service.slugify']
+        public: false
+        tags:
+            - { name: twig.extension }
+            
+    alcyon_core.twig.regex:
+        class: Alcyon\CoreBundle\Twig\Regex
+        public: false
+        tags:
+            - { name: twig.extension }            
+
+    alcyon_core.translation.dbloader:
+        class: Alcyon\CoreBundle\Translation\DbLoader
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: translation.loader, alias: bin}

@@ -1,0 +1,105 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="media_alt">{{ 'Periode'|trans }}</label>
+    <div class="col-sm-5 ">
+    <table class="compact table table-bordered table-striped">
+        <thead>
+            <tr class="text-primary">
+                <th nowrap="">{{ 'Start'|trans }}</th>
+                <th nowrap="">{{ 'End'|trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="periodes" data-prototype="
+            {% filter escape %}
+                {{ include('default/core/prototype/periode.html.twig', { 'form': form.periodes.vars.prototype }) }}
+            {% endfilter %}">
+            
+            {% for periode in form.periodes %}
+                {{ include('default/core/prototype/periode.html.twig', { 'form': periode }) }}
+            {% endfor %}
+          </tbody>
+          <tfooter>
+              
+            <tr>
+                <td colspan="3">
+                    <button id = "addPeriodeButton" class="btn btn-default btn-sm pull-right">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                        {{ 'add_periode'|trans }}
+                    </button>
+                </td>
+            </tr>
+          </tfooter>
+        </table>
+        
+        {% do form.periodes.setRendered %}
+
+    </div>
+</div>
+<script type="text/javascript">
+
+var $collectionHolder;
+
+jQuery(document).ready(function() {
+
+    // Get the ul that holds the collection of tags
+    $collectionHolder = jQuery('tbody.periodes');
+
+     // add a delete link to all of the existing tag form li elements
+    $collectionHolder.find('tr').each(function() {
+        addTagFormDeleteLink(jQuery(this));
+        
+     });
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+    jQuery('#addPeriodeButton').on('click', function(e) {
+
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm($collectionHolder);
+    });
+
+
+});
+
+function addTagForm($collectionHolder) {
+    // Get the data-prototype explained earlier
+    var prototype = $collectionHolder.data('prototype');
+
+    // get the new index
+    var index = $collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = jQuery(prototype.replace(/__name__/g, index));
+
+    // increase the index with one for the next item
+    $collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    jQuery('tbody.periodes').append(newForm);
+
+     // add a delete link to the new form
+    addTagFormDeleteLink(newForm);
+
+}
+
+
+function addTagFormDeleteLink($tagFormTr) {
+
+    var $removeFormA = $tagFormTr.find('td:last-child').find('a');
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the li for the tag form
+        if(confirm('Confirmez-vous la suppression de cette periode ?'))
+            $tagFormTr.remove();
+    });
+}
+
+</script>

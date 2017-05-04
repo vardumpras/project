@@ -1,0 +1,44 @@
+{% extends "::base.html.twig" %}
+
+{% block titleBase %}{% block title %}{% endblock %}{% endblock %}
+
+{% block head %}
+     <link href="/css/alcyon.css" media="print,screen" rel="stylesheet" />
+{% endblock %}
+
+{% block bodyBase %}
+<div class="Alcyon container">
+
+    <div class="m-15">
+        menu haut
+    </div>
+        menu
+    <div class="m-15">
+        {{ include('alcyon/carousel.html.twig') }}
+    </div>
+
+    {#{{ menu('menu.html.twig',0) }}#}
+    <div class="m15">
+        
+        <div class="breadcrumb">
+         breadcrump
+        </div>
+        
+        {% for msg in app.session.flashBag.get('success') %}
+            {{ msg|trans }}
+        {% endfor %}
+
+       
+
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footerBase %}
+
+    <div>
+    {% block footer %}{% endblock %}
+    </div>
+{% endblock %}
+

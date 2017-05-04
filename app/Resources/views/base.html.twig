@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Alcyon - {% block titleBase %}{% endblock %}</title>
+        <!-- BOOTSTRAP CSS -->
+        <link href="/bootstrap/css/bootstrap.min.css" media="print,screen" rel="stylesheet" />
+        
+        <!-- JQUERY -->
+        <script type="text/javascript" src="/scripts/jquery-2.2.3.js"></script>
+        
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        {% block bodyBase %}{% endblock %}
+        {% block footerBase %}{% endblock %}
+
+        <!-- BOOTSTRAP JS -->
+        <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+        {% block script %}{% endblock %}
+    </body>
+</html>
+

@@ -1,0 +1,11 @@
+{% extends "::default/core/media.html.twig" %}
+
+{% block media_form %}
+
+    {{ form_row(form.file) }}
+
+    {{ parent() }}
+
+{% endblock %}    
+
+

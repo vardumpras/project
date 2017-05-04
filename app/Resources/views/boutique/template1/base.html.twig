@@ -1,0 +1,458 @@
+{% extends "::base.html.twig" %}
+
+{% block titleBase %}{% block title %}Boutique Test{% endblock %}{% endblock %}
+
+{% block head %}
+    <meta name="description" content="Boutique Test"/>
+    <meta name="robots" content="index,follow"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=0.25, maximum-scale=1.6, initial-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/boutique/template1/favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/boutique/template1/favicon.ico"/>
+    <link rel="stylesheet" href="/boutique/template1/main.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,600&subset=latin,latin-ext"
+          type="text/css" media="all"/>
+{% endblock %}
+
+{% block bodyBase %}
+    <style>
+        a {
+            color: #fff;
+        }
+
+        a:focus, a:hover {
+            text-decoration: none;
+        }
+
+        .text-white {
+            color: #fff;
+        }
+
+        .header-container .container {
+            padding: 0px;
+        }
+
+        .header-container .container .nav {
+            padding: 0 15px;
+            background: #333 none repeat scroll 0 0;
+        }
+
+        .header-phone {
+            float: left;
+            line-height: 18px;
+            padding: 5px 10px;
+            color: #777;
+        }
+
+        .header-phone span {
+            color: #fff;
+            font-size: 21px;
+            line-height: 21px;
+            padding-right: 7px;
+        }
+
+        .header-phone strong {
+            color: #fff;
+        }
+
+        .header-link {
+            border-left: 1px solid #515151;
+            float: right;
+        }
+
+        .header-link a {
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-weight: bold;
+            line-height: 18px;
+            padding: 8px 10px 11px;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-link a:hover, .header-link a:active {
+            background: #2b2b2b none repeat scroll 0 0 !important;
+        }
+
+        .header-logo {
+            padding: 15px;
+        }
+
+        #searchbox {
+            padding-top: 50px;
+        }
+
+        #searchbox input {
+            background: #fbfbfb none repeat scroll 0 0;
+            border-radius: 0;
+            height: 45px;
+        }
+
+        #searchbox .glyphicon {
+            border-radius: 0;
+            color: #fff;
+            top: 0px;
+            background: #333 none repeat scroll 0 0;
+        }
+
+        .shopping_cart {
+            float: right;
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 50px;
+            width: 100%;
+        }
+
+        .shopping_cart > a {
+            background: #333 none repeat scroll 0 0;
+            color: #777777;
+            display: block;
+            font-weight: bold;
+            overflow: hidden;
+            padding: 10px 16px;
+            text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        .shopping_cart > a b {
+            color: #fff;
+            font: 600 18px/22px "Open Sans", sans-serif;
+            padding-right: 5px;
+        }
+
+        .shopping_cart > a .glyphicon-shopping-cart {
+            margin-right: 10px;
+            color: #FFF;
+            font-size: 1.5em;
+        }
+
+        .shopping_cart > a .glyphicon-triangle-bottom, .shopping_cart > a .glyphicon-triangle-top {
+            float: right;
+            padding-top: 7px;
+        }
+
+        .product-name {
+            color: #3a3939;
+            font-size: 17px;
+            line-height: 23px;
+            margin-bottom: 0;
+        }
+
+        .shopping_cart .cart_block {
+            opacity: 0;
+            height: auto;
+            width: 100%;
+            -webkit-transition: all 500ms ease-in-out;
+            -moz-transition: all 500ms ease-in-out;
+            -ms-transition: all 500ms ease-in-out;
+            -o-transition: all 500ms ease-in-out;
+            transition: all 500ms ease-in-out;
+            background: #484848 none repeat scroll 0 0;
+            color: #fff;
+            position: absolute;
+            top: 95px;
+
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .shopping_cart > a:hover + .cart_block {
+            opacity: 1;
+        }
+
+        .shopping_cart .cart_block a {
+            color: #fff;
+        }
+
+        .shopping_cart .cart_block .quantity-formated {
+            color: #9c9b9b;
+            font-size: 10px;
+            padding-right: 5px;
+        }
+
+        .shopping_cart .cart_block .product-name {
+            margin-top: -4px;
+            padding-bottom: 5px;
+        }
+
+        .shopping_cart .cart_block .product-atributes {
+            font-size: 11px;
+            padding-bottom: 10px;
+            color: #9c9b9b;
+        }
+
+        .cart_block dt {
+            background: #484848 url("/boutique/template1/images/cart-shadow.png") repeat-x scroll 0 0;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 20px 10px 16px 20px;
+            position: relative;
+        }
+
+        .cart_block dt.firt {
+            background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+        }
+
+        .cart_block .cart-images {
+            float: left;
+            margin-right: 20px;
+        }
+
+        .cart_block .cart-info {
+            overflow: hidden;
+            padding-right: 20px;
+            position: relative;
+        }
+
+        .cart_block .remove_link {
+            position: absolute;
+            right: 10px;
+            top: 19px;
+        }
+
+        .cart_block .cart-prices {
+            background: #3d3d3d url("/boutique/template1/images/cart-shadow.png") repeat-x scroll 0 0;
+            border: medium none;
+            font-weight: bold;
+            padding: 10px 20px 22px;
+        }
+
+        .cart_block .price {
+            float: right;
+        }
+
+        .cart_block .cart-buttons {
+            background: #333 url("/boutique/template1/images/cart-shadow.png") repeat-x scroll 0 0;
+            margin: 0;
+            overflow: hidden;
+            padding: 20px 20px 10px;
+        }
+
+        .cart_block .cart-buttons a {
+            text-align: center;
+            padding: 0;
+            width: 100%;
+        }
+
+        .cart_block .cart-buttons a span {
+            background: #43b155 none repeat scroll 0 0;
+            border: 1px solid #63c473;
+            font-size: 1.1em;
+            display: block;
+            font-weight: bold;
+            padding: 7px 0;
+        }
+
+        .cart_block .cart-buttons a:hover span {
+            background: #2e7a3a none repeat scroll 0 0;
+            border: 1px solid #358c43;
+            color: #fff;
+        }
+
+        .block_menu .cat-title {
+            background: #f6f6f6 none repeat scroll 0 0;
+            border-bottom: 3px solid #e9e9e9;
+            color: #484848;
+            display: block;
+            font: 600 18px/22px "Open Sans", sans-serif;
+            padding: 17px 20px;
+            position: relative;
+            text-transform: uppercase;
+        }
+    </style>
+    <div class="header-container">
+        <div class="container">
+            <div class="nav">
+                <div class="row">
+                    <div class="header-phone">
+                        <span class="glyphicon glyphicon-earphone"></span>Appelez-nous au : <strong>04 94 22 00
+                            00</strong>
+                    </div>
+                    <div class="header-link">
+                        <a href="/nous-contacter" title="Contactez-nous">Contactez-nous</a>
+                    </div>
+
+                    <div class="header-link">
+                        <a class="login" href="/mon-compte" rel="nofollow" title="Identifiez-vous"> Connexion </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="header-logo">
+                        <a href="/" title="Boutique test">
+                            <img class="logo img-responsive" src="/boutique/template1/images/logo.jpg"
+                                 alt="Boutique test" width="160" height="92"/>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <form id="searchbox" method="get" action="/recherche">
+                        <div class="input-group">
+                            <input class="form-control" type="text" id="search_query_top" name="search_query"
+                                   placeholder="Je rechercher" value=""/>
+                            <span class="glyphicon glyphicon-search input-group-addon"></span>
+                        </div>
+
+                        </button>
+                    </form>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="shopping_cart">
+
+                        <a href="/commande" title="Voir mon panier" rel="nofollow">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <b>Panier</b>
+                            2 produits
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </a>
+                        <div class="cart_block">
+                            <div class="cart_block_content">
+                                <dl class="products">
+                                    <dt class="firt">
+                                        <a class="cart-images" href="/produit.html" title="Title"><img
+                                                    src="/image/fill/125/125/produit/2605109.jpg" alt="alt"></a>
+                                    <div class="cart-info">
+                                            <span class="quantity-formated">
+                                                <span class="quantity">1</span>&nbsp;x&nbsp;
+                                            </span>
+                                        <br>
+                                        <a class="product_name"
+                                           href="/produit.html"
+                                           title="SPECIFIC CGD SMALL SENIOR BREED SAC 2,5KG">SPECIFIC...</a>
+                                        <br>
+                                        <a class="product-atributes"
+                                           href="/produit.html"
+                                           title="Détails de l'article">Senior, Petites races, Vieillissement</a>
+                                        <br> <br>
+                                        <span> 20,94 € </span>
+                                    </div>
+                                    <a class="remove_link" href="/panier/delete/354" rel="nofollow"
+                                       title="supprimer cet article du panier">
+                                        <span class="text-white glyphicon glyphicon-remove-sign"></span></a>
+                                    </dt>
+                                    <dt>
+                                        <a class="cart-images" href="/produit.html" title="Title"><img
+                                                    src="/image/fill/125/125/produit/2605109.jpg" alt="alt"></a>
+                                    <div class="cart-info">
+                                            <span class="quantity-formated">
+                                                <span class="quantity">1</span>&nbsp;x&nbsp;
+                                            </span>
+                                        <br>
+                                        <a class="product_name"
+                                           href="/produit.html"
+                                           title="SPECIFIC CGD SMALL SENIOR BREED SAC 2,5KG">SPECIFIC...</a>
+                                        <br>
+                                        <a class="product-atributes"
+                                           href="/produit.html"
+                                           title="Détails de l'article">Senior, Petites races, Vieillissement</a>
+                                        <br> <br>
+                                        <span> 20,94 € </span>
+                                    </div>
+                                    <a class="remove_link" href="/panier/delete/354" rel="nofollow"
+                                       title="supprimer cet article du panier">
+                                        <span class="text-white glyphicon glyphicon-remove-sign"></span></a>
+                                    </dt>
+                                </dl>
+                            </div>
+                            <div class="cart-prices">
+                                <div class="cart-prices-line last-line">
+                                    <span class="price cart_block_total ajax_block_cart_total">12,10 €</span>
+                                    <span>Total</span>
+                                </div>
+                            </div>
+                            <p class="cart-buttons">
+                                <a href="/commande"
+                                   title="Commander" rel="nofollow">
+                                    <span> Commander <i class="glyphicon glyphicon-chevron-right"></i> </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block_menu col-lg-12">
+                <div class="cat-title">Menu</div>
+                {{ menu(":" ~ app.request.attributes.get("theme_name") ~ ":menu.html.twig", 0) }}
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="columns-container">
+        <div id="columns" class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="footer-container">
+        <footer id="footer" class="container">
+            <div class="row">
+                <div id="newsletter_block_left" class="block"><h4>Lettre d'informations</h4>
+                    <form method="post">
+                        <div class="form-group"><input class="inputNew form-control grey newsletter-input"
+                                                       id="newsletter-input" type="email" name="email" size="18"
+                                                       placeholder="Saisissez votre adresse e-mail"/>
+                            <button type="submit" name="submitNewsletter"
+                                    class="btn btn-default button button-small"></button>
+                        </div>
+                    </form>
+                </div>
+                <section class="blockcategories_footer footer-block col-xs-12 col-sm-2"><h4>Catégories</h4>
+                    <div class="category_footer toggle-footer">
+                        <div class="list">
+                            <ul class="tree dhtml">
+                                <li><a href="/49-chiens" title="">Chiens </a></li>
+                                <li><a href="/426-chats" title="">Chats </a></li>
+                                <li><a href="/52-nac" title=""> NAC </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section class="footer-block col-xs-12 col-sm-2" id="block_various_links_footer"><h4>Informations</h4>
+                    <ul class="toggle-footer">
+                        <li class="item"><a href="/nous-contacter" title="Contactez-nous"> Contactez-nous </a></li>
+                        <li class="item"><a href="/content/2-mentions-legales" title="Mentions légales"> Mentions
+                                légales </a></li>
+                        <li class="item"><a href="/content/3-conditions-utilisation"
+                                            title="Conditions d&#039;utilisation"> Conditions d&#039;utilisation </a>
+                        </li>
+                        <li class="item"><a href="/content/6-conditions-generales-de-vente"
+                                            title="Conditions générales de vente"> Conditions générales de vente </a>
+                        </li>
+                    </ul>
+                </section>
+                <section class="footer-block col-xs-12 col-sm-4">
+                    <h4><a href="/mon-compte" title="Gérer mon compte client" rel="nofollow">Mon compte</a></h4>
+                    <div class="block_content toggle-footer">
+                        <ul class="bullet">
+                            <li><a href="/historique-commandes" title="Mes commandes" rel="nofollow">Mes commandes</a>
+                            </li>
+                            <li><a href="/suivi-commande" title="Mes retours de marchandise" rel="nofollow">Mes retours
+                                    de marchandise</a></li>
+                            <li><a href="/avoirs" title="Mes avoirs" rel="nofollow">Mes avoirs</a></li>
+                            <li><a href="/adresses" title="Mes adresses" rel="nofollow">Mes adresses</a></li>
+                            <li><a href="/identite" title="Gérer mes informations personnelles" rel="nofollow">Mes
+                                    informations personnelles</a></li>
+                            <li><a href="/reduction" title="Mes bons de réduction" rel="nofollow">Mes bons de
+                                    réduction</a></li>
+                        </ul>
+                    </div>
+                </section>
+                <section id="block_contact_infos" class="footer-block col-xs-12 col-sm-4">
+                    <div><h4>Informations sur votre boutique</h4>
+                        <ul class="toggle-footer">
+                            <li><i class="icon-map-marker"></i>Clinique vétérinaire Holos Bios , 501 avenue Maréchal
+                                Juin , 83140 Six-Fours-les-Plages
+                            </li>
+                            <li><i class="icon-phone"></i>Appelez-nous au : <span>04 94 22 00 00</span></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </footer>
+    </div>
+
+{% endblock %}

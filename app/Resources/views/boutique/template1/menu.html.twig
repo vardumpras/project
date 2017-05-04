@@ -1,0 +1,37 @@
+{% macro submenu(menu, depth, uri) %}
+
+    {% import _self as m %}
+
+    {% if menu.depth == depth %}
+    <ul class="menu-content">
+        {% for submenu in menu.childs %}
+            {% if submenu.visible %}
+            <li>
+                {{ m.submenu(submenu, depth, uri) }}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if menu.depth > depth %}
+
+    <a href="{{ menu.url}}" title="{{ menu.title }}">{{ menu.title }}</a>
+        {% if menu.childs|length > 0 %}
+        <ul>
+            {% for submenu in menu.childs %}
+                {% if submenu.visible %}
+                <li>
+                    {{ m.submenu(submenu, depth, uri) }}
+                </li>
+                {% endif %}
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endif %}
+
+{% endmacro %}
+
+{% import _self as m %}
+
+{{ m.submenu(menu, depth, uri) }}

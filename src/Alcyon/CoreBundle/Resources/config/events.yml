@@ -1,0 +1,47 @@
+services:
+
+    alcyon_core.event.theme:
+        class: Alcyon\CoreBundle\EventListener\ThemeEventListener
+        arguments: [ '@alcyon_core.service.getdns', '@alcyon_core.service.gettheme' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    alcyon_core.event.orm.soft_delete:
+        class: Alcyon\CoreBundle\EventListener\ORM\SoftDeleteEventListener
+        arguments: [ '@security.token_storage']
+        tags:
+            - { name: doctrine.event_listener, event: preFlush}
+
+    alcyon_core.event.orm.author:
+        class: Alcyon\CoreBundle\EventListener\ORM\AuthorEventListener
+        arguments: [ '@security.token_storage']
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    alcyon_core.event.locale:
+        class: Alcyon\CoreBundle\EventListener\LocaleEventListener
+        arguments: ['%kernel.default_locale%']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request , priority: 15 }
+
+    alcyon_core.event.orm.postloadfile:
+        class: Alcyon\CoreBundle\EventListener\ORM\PostLoadFileEventListener
+        arguments: [ '%uploads_directory%']
+        tags:
+            - { name: doctrine.event_listener, event: postLoad }
+
+    alcyon_core.event.orm.upload:
+        class: Alcyon\CoreBundle\EventListener\ORM\UploadEventListener
+        arguments: [ '@alcyon_core.service.fileuploader', '@alcyon_core.service.slugify' ]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    alcyon_core.event.orm.slug:
+        class: Alcyon\CoreBundle\EventListener\ORM\SlugListener
+        arguments: [ '@alcyon_core.service.slugify' ]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postLoad }

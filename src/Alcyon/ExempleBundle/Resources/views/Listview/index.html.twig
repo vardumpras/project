@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bienvenue sur ma première  liste!</title>
+		<link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>	
+		<link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap-datepicker.css"/>
+        <link rel="stylesheet" href="/css/listview.min.css"/>
+        <script type="text/javascript" src="/scripts/jquery-2.2.3.js"></script>
+    </head>
+    <body>
+        <div id="content" class="bootstrap">
+            <br><br>
+            {{ listview(list) }}
+		</div>
+
+        <script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <!-- DATEPICKER JS -->
+        <script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+            jQuery(function () { jQuery('[data-toggle="tooltip"]').tooltip() })
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,4 @@
+services:
+#    alcyon_backend.example:
+#        class: Alcyon\BackendBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

@@ -1,0 +1,66 @@
+<li class="ajax_block_product col-xs-12 col-sm-6 col-md-{{ 12/max }}
+    {% if number%max == 1 %}
+        first-in-line first-item-of-tablet-line first-item-of-mobile-line
+    {% elseif number%max == 0 %}
+        first-item-of-tablet-line last-item-of-mobile-line
+    {% else %}
+        last-item-of-tablet-line
+    {% endif %}
+">
+    <div class="product-container" itemscope="" itemtype="https://schema.org/Product">
+        <div class="left-block">
+            <div class="product-image-container"><a class="product_img_link"
+                                                    href="/exemple/{{ product.slug|slugify }}.html"
+                                                    title="{{ product.title }}"
+                                                    itemprop="url"> <img
+                            class="replace-2x img-responsive"
+                            src="{{ path('resizeimage', { 'type':'fill', 'width' :250, 'height' :250, 'url': product.defaultImage.url|default('default')}) }}"
+                            alt="{{ product.title }}"
+                            title="{{ product.title }}" itemprop="image"
+                            width="250"
+                            height="250"
+                            > </a>
+                <div class="quick-view-wrapper-mobile"><a class="quick-view-mobile"
+                                                          href="/exemple/{{ product.slug|slugify }}.html"
+                                                          rel="/exemple/{{ product.slug|slugify }}.html">
+                        <i class="icon-eye-open"></i> </a></div>
+                <a class="quick-view"
+                   href="/exemple/{{ product.slug|slugify }}.html"
+                   rel="/exemple/{{ product.slug|slugify }}.html">
+                    <span>Aperçu rapide</span> </a>
+                <div class="content_price" itemprop="offers" itemscope=""
+                     itemtype="https://schema.org/Offer"><span itemprop="price"
+                                                               class="price product-price"> 19,90 € </span>
+                    <meta itemprop="priceCurrency" content="EUR">
+                    <span class="unvisible"><link itemprop="availability"
+                                                  href="https://schema.org/InStock">Disponible </span>
+                </div>
+            </div>
+        </div>
+        <div class="right-block"><h5 itemprop="name"><a class="product-name"
+                                                        href="/exemple/{{ product.slug|slugify }}.html"
+                                                        title="{{ product.title }}"
+                                                        itemprop="url"> {{ product.title }}
+                    ML </a></h5>
+            <p class="product-desc" itemprop="description">{{ product.shortContent }}</p>
+            <div class="content_price"><span class="price product-price"> 19,90 € </span></div>
+            <div class="button-container" style="display: none;"><a
+                        class="button ajax_add_to_cart_button btn btn-default"
+                        href="http://boutique.cliniqueveterinaireholosbios.com/panier?add=1&amp;id_product=85&amp;ipa=1&amp;token=ca1aaf325f83b122844b2af8c7094ed1"
+                        rel="nofollow" title="Ajouter au panier" data-id-product-attribute="1"
+                        data-id-product="85" data-minimal_quantity="1">
+                    <span>Ajouter au panier</span> </a> <a class="button lnk_view btn btn-default"
+                                                           href="/exemple/{{ product.slug|slugify }}.html"
+                                                           title="Afficher"> <span>Détails</span>
+                </a></div>
+            <div class="color-list-container"></div>
+            <div class="product-flags"></div>
+            <span class="availability"> <span class=" label-success"> Disponible </span> </span>
+        </div>
+        <div class="functional-buttons clearfix">
+            <div class="compare"><a class="add_to_compare"
+                                    href="/exemple/{{ product.slug|slugify }}.html"
+                                    data-id-product="85">Ajouter au comparateur</a></div>
+        </div>
+    </div>
+</li>

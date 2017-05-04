@@ -1,0 +1,20 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: alcyon
+    database_user: root
+    database_password: toor_db_test
+    database_driver: pdo_mysql
+    database_charset: UTF8
+    database_memory: null
+    database_path: null
+    uploads_directory: '%kernel.root_dir%/../var/uploads'
+    web_directory: '%kernel.root_dir%/../web/'
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    mailer_port: null
+    secret: 5f4b8a96e2621a10ece275a149c1a5b1bc99a561
+    alcyon_core.component.listhelper_registry: alcyon_core.component.listhelper_registry

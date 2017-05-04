@@ -1,0 +1,16 @@
+<ul id="home-page-tabs" class="nav nav-tabs clearfix active">
+    {% for title, productList in products %}
+    <li class="{% if loop.index == 1 %}active{% endif %}">
+        <a data-toggle="tab" href="#homefeatured-{{ title|slugify }}" class="homefeatured">{{ title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+<div class="tab-content">
+    {% for title, productList in products %}
+    <ul id="homefeatured-{{ title|slugify }}" class="product_list grid row homefeatured tab-pane {% if loop.index == 1 %}active{% endif %}">
+        {% for product in productList %}
+           {% include 'AlcyonExempleBundle:Boutique:product.block.html.twig' with {'product': product, 'number': loop.index, 'max': 4} %}
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>

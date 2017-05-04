@@ -1,0 +1,67 @@
+{% extends ":" ~ app.request.attributes.get("theme_name") ~ ":base.html.twig" %}
+
+{% block body %}
+    <div id="slider_row" class="row">
+        <div id="top_column" class="center_column col-xs-12 col-sm-12">
+            <div id="homepage-slider">
+                <ul id="homeslider" style="max-height:405px;">
+                    <li class="homeslider-container"><a href="/"
+                                                        title="Nouvelle Boutique"> <img
+                                    src="http://boutique.cliniqueveterinaireholosbios.com/modules/homeslider/images/acdc90232dc4f73dc160e550c263a1f842897672_HOLOS-BIOS-bannière.jpg"
+                                    width="1170" height="405" alt="Nouvelle Boutique"/> </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="center_column" class="center_column col-xs-12 col-sm-12">
+            {{ renderHook('home.center') }}
+            
+            <div class="clearfix">
+                <div id="cmsinfo_block">
+                    <div class="col-xs-6">
+                        <ul>
+                            <li><em class="icon-truck" id="icon-truck"></em>
+                                <div class="type-text">
+                                    <h4><strong>LA LIVRAISON GRATUITE CHEZ VOTRE VETERINAIRE</strong></h4>
+                                    Votre commande est livrée sous 3 à 5 jours
+                                    ouvrés. Venez chercher votre commande aux heures d'ouverture de la clinique.
+                                </div>
+                            </li>
+                            <li><em class="icon-phone" id="icon-phone"></em>
+                                <div class="type-text">
+                                    <h4><strong>CONTACT</strong>&nbsp;</h4>
+                                    Vous avez une question sur votre commande ? Vous pouvez nous contacter pendant les
+                                    horaires d'ouverture de la clinique vétérinaire Holos Bios au 04 94 22 00
+                                    00. Vous pouvez également nous contacter par mail via la rubrique "Contacts"
+                                    de notre site.
+                                </div>
+                            </li>
+                            <li><em class="icon-credit-card" id="icon-credit-card"></em>
+                                <div class="type-text"><h4><strong>PAIEMENT SECURISÉ</strong>&nbsp;</h4>
+                                    Par carte bancaire via le service sécurisé PAYBOX. Les informations relatives à
+                                    votre carte bancaire ne circulent à aucun moment en clair sur Internet.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4><strong>SATISFAIT OU REMBOURSÉ</strong></h4>
+                        <h5><strong class="dark">SI VOUS N'ETES PAS SATISFAIT, ON VOUS REMBOURSE</strong></h5>
+                        <p>Vous changez d'avis? Vous disposez de 14 jours francs à compter de la réception de
+                            votre commande pour nous retourner le(s) produit(s) à l'adresse suivante:</p>
+                        <p style="text-align:justify;">HOLOS BIOS</p>
+                        <p style="text-align:justify;">501 avenue Maréchal Juin</p>
+                        <p style="text-align:justify;">83140&nbsp;Six-Fours-les-Plages</p>
+                        <p></p>
+                        <p>Holos Bios s'engage à rembourser le(s) produit(s) sous réserve que celui-ci soit
+                            retourné intact dans son emballage d'origine, sans trace d'utilisation et accompagné
+                            de la facture d'origine et du bon de retour .</p>
+                        <p>Les articles retournés sans ces documents, et incomplets, abîmés, endommagés ou salis
+                            ne sont ni repris, ni remboursés, ni échangés.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% macro breadcrumb(menus, depth, uri) %}
+	{% for menu in menus.childs %}
+		{% if(menu.depth >= depth) %}
+        
+			{% if menu.getMenuByUri(uri) is not null %}
+            <span class="navigation-pipe">></span>
+			<span class="navigation_page">
+				{% if menu.url == uri %}
+					{{menu.title}}
+				{% else %}
+                    <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <a itemprop="url" href="{{menu.url}}" title="{{menu.title|trans}}" ><span itemprop="title">{{menu.title|trans}}</span></a>
+                    </span>
+				{% endif %}
+                {% import _self as m %}
+                {{ m.breadcrumb(menu, depth, uri) }}	
+			</span>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+{% endmacro %}
+
+{% import _self as m %}
+
+<div class="breadcrumb clearfix">
+    <a class="home" href="{{ menu.url}}" title="{{ menu.title }}"><i class="icon-home"></i></a>
+    {{ m.breadcrumb(menu, depth, uri) }}
+</div>

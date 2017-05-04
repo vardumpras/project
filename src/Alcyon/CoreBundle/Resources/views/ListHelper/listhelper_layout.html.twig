@@ -1,0 +1,390 @@
+{%- block listview_pagination -%}
+<div class="col-lg-6">
+{%- if list.hasTag('pagination') -%}
+{%- for element in list.getChildrenByTag('pagination') -%}
+    {%- set form = attribute(list.form, element.vars.name) -%}
+    {{- form_widget(form.currentpage) -}}
+    {{- form_widget(form.nbpaginationitem) -}}
+    <input id="{{ form.itemperpage.vars.id }}" name="{{form.itemperpage.vars.full_name }}" value="{{ form.itemperpage.vars.value }}" type="hidden">
+    {%- do form.setRendered -%}
+
+    {%- set currentPage = form.currentpage.vars.value -%}
+    {%- set itemperpage = form.itemperpage.vars.value -%}
+    {%- set nbpaginationitem = form.nbpaginationitem.vars.value -%}
+    {%- if(form.itemperpage.vars.choices|length >1) -%}
+    <div class="pagination">
+        {{ 'Showing'|trans }}
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            {{ itemperpage }} <span class="glyphicon glyphicon-triangle-bottom"></span>
+        </button>
+        <ul class="dropdown-menu">
+        {% for choices in form.itemperpage.vars.choices %}
+            <li>
+                <a href="" data-type="pagination" data-page="1" data-itemperpage="{{ choices.value }}"  {% set attr = element.vars.attr %}{{ block('attributes') }}>{{ choices.value }}</a>
+            </li>
+        {% endfor %}
+        </ul> / {{ list.vars.data|length}} {{ 'result'|trans}}(s)
+    </div>
+    {%- endif -%}
+
+    <ul class="pagination pull-right">
+        <li class="{{ currentPage > 1 ? '' : 'disabled' }}">
+            <a href="" data-type="pagination" data-itemperpage="{{ itemperpage }}" data-page="{{ currentPage > 1 ? 1:'0' }}" {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                <i class="glyphicon glyphicon-backward"></i>
+            </a>
+        </li>
+        <li class="{{ currentPage > 1 ? '' : 'disabled' }}">
+            <a href="" data-type="pagination" data-itemperpage="{{ itemperpage }}" data-page="{{ currentPage > 1 ? currentPage-1:'0' }}" {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                <i class="glyphicon glyphicon-triangle-left"></i>
+            </a>
+        </li>
+        {%- set nbPage = (list.vars.data|length / itemperpage)|round (0, 'ceil') -%}
+        {%- set startPage = currentPage - ((nbpaginationitem/2)|round(0, 'ceil')) -%}
+
+        {%- if 0 >= startPage %}{% set startPage = 1 %}{% endif -%}
+        {%- for i in range(startPage, startPage + nbpaginationitem -1) -%}
+            {% if nbPage >=  i %}
+            <li class="{% if i == currentPage %}active{% endif %}">
+                <a href="" data-type="pagination" data-itemperpage="{{ itemperpage }}" data-page="{{ i }}" {% set attr = element.vars.attr %}{{ block('attributes') }}>{{ i }}</a>
+            </li>
+            {%- endif -%}
+        {%- endfor -%}
+        <li class="{{ currentPage < nbPage ? '' : 'disabled' }}">
+            <a href="" data-type="pagination" data-itemperpage="{{ itemperpage }}" data-page="{{ currentPage < nbPage ? currentPage+1:'0'}}" {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                <i class="glyphicon glyphicon-triangle-right"></i>
+            </a>
+        </li>
+        <li class="{{ currentPage < nbPage ? '' : 'disabled' }}">
+            <a href="" data-type="pagination" data-itemperpage="{{ itemperpage }}" data-page="{{ currentPage < nbPage ? nbPage:'0'}}" {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                <i class="glyphicon glyphicon-forward"></i>
+            </a>
+        </li>
+    </ul>
+{%- endfor -%}
+{%- endif %}
+</div>
+{%- endblock listview_pagination -%}
+
+{%- block listview_grouped_action -%}
+<div class="col-lg-6">
+{%- if list.hasTag('grouped-action') -%}
+    <div class="btn-group bulk-actions dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            {{ 'Grouped_action'|trans }} <span class="caret"></span>
+        </button>
+         <ul class="dropdown-menu">
+        {%- for element in list.getChildrenByTag('grouped-action') -%}
+            <li class="{% if element.vars.disabled %}divider{% endif %}">
+                {% if element.vars.disabled == false %}
+                <a href="" data-type="grouped-action" {%- if element.vars.auto_check_all -%}data-autocheck="true"{%- endif -%} {%- if element.vars.auto_uncheck_all -%}data-autouncheck="true"{%- endif -%} data-id="{{ element.vars.name }}" title="{{ element.vars.name|capitalize|trans }}"  {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                    <span class="{{ element.vars.class|default('') }}"></span>&nbsp;{{ element.vars.name|capitalize|trans }}
+                </a>
+                {% endif %}
+            </li>
+        {%- endfor -%}
+        </ul>
+    </div>
+{%- endif %}
+</div>
+{%- endblock listview_grouped_action -%}
+
+{%- block listview_footer -%}
+    {%- if list.hasTag('footer') -%}
+        <div class="row">
+            {{- block('listview_grouped_action') -}}
+            {{- block('listview_pagination') -}}
+        </div>
+    {%- endif -%}
+{%- endblock listview_footer -%}
+
+{%- block listview_tablefooter -%}
+    {%- if list.hasTag('table-footer') -%}
+        <tfoot>
+            <tr>
+                {%- if list.hasTag('grouped-action') -%}
+                <td class=""></td>
+                {%- endif -%}
+
+                {%- for element in list.getChildrenByTag('column') -%}
+                <td class=""></td>
+                {%- endfor -%}
+
+                {%- if list.hasTag('action') -%}
+                <td class=""></td>
+                {%- endif -%}
+            </tr>
+        </tfoot>
+    {%- endif -%}
+{%- endblock listview_tablefooter -%}
+
+{%- block listview_action -%}
+{%- if list.hasTag('inline-action') -%}
+<div class="btn-group-action">
+    <div class="btn-group">
+    {%- for element in list.getChildrenByTag('inline-action') -%}
+
+        {%- if loop.index == 2 %}<ul class="dropdown-menu">{% endif -%}
+        {%- if loop.first == false%}<li class="{% if element.vars.disabled %}divider{% endif %}">{% endif -%}
+        {% if element.vars.disabled == false %}
+        <a href="{{ element.vars.path ? path(element.vars.path,  {'id' : id }) : '' }}" data-type="action" data-id="{{ element.vars.name }}" title="{{ element.vars.name|capitalize|trans }}" class="{% if loop.first %}edit btn btn-default{% endif %}">
+            <span class="{{ element.vars.class|default('') }}" ></span>&nbsp;{{ element.vars.name|capitalize|trans }}
+        </a>
+        {%- endif -%}
+        {%- if loop.first == false %}</li>{% endif -%}
+        {%- if loop.last and loop.first == false %}</ul>{% endif -%}
+        {%- if loop.first and loop.length>1 -%}
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        {%- endif -%}
+    {%- endfor -%}
+    </div>
+</div>
+{%- endif -%}
+{%- endblock listview_action -%}
+
+{%- block listview_tablebody -%}
+<tbody>
+{% for data in list.vars.data %}
+    <tr>
+        {%- if list.hasTag('grouped-action') -%}
+        <td class="row-selector text-center">
+            <input data-type="grouped-checkbox" name="{{ list.name }}checkBox[]" value="{{  data.id }}" class="noborder" type="checkbox">
+        </td>
+        {%- endif -%}
+        {%- for element in list.getChildrenByTag('column') -%}
+        <td class="{{ element.vars.class|default('') }}">
+            <div {% set attr = element.vars.attr %}{{ block('attributes') }}>
+            {{ element.vars.transformer.transform(data)|default('')|raw }}
+            </div>
+        </td>
+        {%- endfor -%}
+        <td class="text-right">
+            {%- set id = data.id %}
+            {{- block('listview_action') -}}
+        </td>
+    </tr>
+ {% endfor %}
+ </tbody>
+{%- endblock listview_tablebody -%}
+
+{%- block listview_tablehead -%}
+<thead>
+    <tr class="title">
+        {%- if list.hasTag('grouped-action') -%}
+        <th class=""></th>
+        {%- endif -%}
+        {%- for element in list.getChildrenByTag('column') -%}
+        {%- set id = element.vars.name -%}
+        {%- set name = element.vars.name|capitalize|trans -%}
+        <th class="{{ element.vars.class|default('') }}">
+            <span class="title_box">
+                {{- name -}}
+                {%- if element.vars.allow_order -%}
+                    {{- " " -}}
+                    {%-  set orderby = ''-%}
+                    {%-  set orderway = '' -%}
+
+                    {%- for element in list.getChildrenByTag('order') -%}
+                        {%- set orderform = attribute(list.form, element.vars.name) -%}
+                        {%- set orderby = orderform.orderby.vars.value -%}
+                        {%- set orderway = orderform.orderway.vars.value -%}
+                    {%- endfor -%}
+                    {%- if orderby!= element.vars.name or orderway != 'DESC'%}
+                        <a href="" data-type="pagination" data-page="1"  data-orderby="{{ id }}" data-orderway="DESC" title="{{- 'Order by :'|trans}} {{ name }} {{ 'desc'|trans }}"><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                    {%- else -%}
+                        <span class="glyphicon glyphicon-triangle-bottom"></span>
+                    {%- endif -%}
+                    {%- if orderby!= element.vars.name or orderway != 'ASC'%}
+                    <a href="" data-type="pagination" data-page="1"  data-orderby="{{ id }}" data-orderway="ASC" title="{{- 'Order by :'|trans}} {{ name }} {{ 'desc'|trans }}"><span class="glyphicon glyphicon-triangle-top"></span></a>
+                    {%- else -%}
+                    <span class="glyphicon glyphicon-triangle-top"></span>
+                    {%- endif -%}
+
+                {%- endif -%}
+            </span>
+        </th>
+        {%- endfor -%}
+        {%- if list.hasTag('column') or list.hasTag('action') -%}
+        <th></th>
+        {%- endif -%}
+    </tr>
+    <tr class="filter">
+        {%- if list.hasTag('grouped-action') -%}
+        <th class="text-center">--</th>
+        {%- endif -%}
+        {%- for element in list.getChildrenByTag('column') -%}
+        <th>
+            {%- if attribute( list.form, element.vars.name ) is defined -%}
+            {%- set formelement = attribute(list.form, element.vars.name) -%}
+                {%-  if formelement.count > 0 -%}
+                {%- for form in formelement -%}
+                    <div class='input-group'>{{- form_widget(form) -}}</div>
+                {%- endfor -%}
+                {%- else -%}
+                    {{ form_widget(formelement) }}
+                {%- endif -%}
+            {%- endif -%}
+        </th>
+        {%- endfor -%}
+        {%- if list.hasTag('column') -%}
+        <th class="actions text-right">
+            <span class="pull-right">
+                <button type="submit" id="submitFilterButton{{ list.name }}" name="submitFilterButton{{ list.name }}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search"></span> {{ 'Find'|trans }}
+                </button>
+            </span>
+        </th>
+        {%- endif -%}
+    </tr>
+</thead>
+{%- endblock listview_tablehead -%}
+
+{%- block listview_body -%}
+{%- for element in list.getChildrenByTag('order') -%}
+    {%- set orderform = attribute(list.form, element.vars.name) -%}
+    {{  form_widget(orderform.orderby) }}
+    {{  form_widget(orderform.orderway) }}
+{%- endfor -%}
+
+<div class="table-responsive-row ">
+    <table id="table-{{ list.name }}" class="table table-striped">
+        {{- block('listview_tablehead') -}}
+        {{- block('listview_tablebody') -}}
+        {{- block('listview_tablefooter') -}}
+    </table>
+</div>
+{%- endblock listview_body -%}
+
+{%- block listview_header -%}
+<div class="panel-heading">
+    {{ list.vars.name|capitalize|trans }} > <span class="badge">{{ list.vars.data|length }}</span>
+    {%- if list.hasTag('header-action') -%}
+    <span class="panel-heading-action">
+        {%- for element in list.getChildrenByTag('header-action') -%}
+            <a href="{{ element.vars.path ? path(element.vars.path) : '' }}" data-type="header-action" data-id="{{ element.vars.name }}"  id="{{ element.vars.name }}" title="{{ element.vars.name|capitalize|trans }}" {% set attr = element.vars.attr %}{{ block('attributes') }}>
+                <span class="{{ element.vars.class|default('') }}"></span>
+            </a>
+        {%- endfor -%}
+    </span>
+    {%- endif -%}
+</div>
+{%- endblock listview_header -%}
+
+{%- block listview_widget -%}
+    {{- block('listview_header') -}}
+    {{- block('listview_body') -}}
+    {{- block('listview_footer') -}}
+{%- endblock listview_widget -%}
+
+{%- block listview_end -%}
+    </div>
+</div>
+{{ form_end(list.form) }}
+{%- endblock listview_end -%}
+
+{%- block listview_start -%}
+{{ form_start(list.form) }}
+<div id="{{ list.name }}" class="col-lg-12">
+    <div class="panel">
+{%- endblock listview_start -%}
+
+{%- block listview_stript -%}
+{%- if list.hasTag('column') or list.hasTag('footer')-%}
+{%-  block script -%}
+{{ parent() }}
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        {%- if list.hasTag('column') -%}
+        jQuery('#{{ list.name }} .filter input').each(function(){
+            jQuery(this).keypress(function(e){
+                var key = (e.keyCode ? e.keyCode : e.which);
+                if (key == 13)
+                {
+                    e.preventDefault();
+                    {%- for element in list.getChildrenByTag('pagination') -%}
+                    {%- set form = attribute(list.form, element.vars.name) -%}
+                    jQuery('#{{ form.currentpage.vars.id }}').prop('value', '1');
+                    {%- endfor -%}
+                    jQuery('#submitFilterButton{{ list.name }}').click();
+                }
+            });
+            if(jQuery(this).data('provide') == 'datepicker')
+                jQuery(this).after('<span class="input-group-btn"><button onclick="jQuery(\'#' + jQuery(this).prop('id') + '\').datepicker(\'show\');" type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>');
+
+        });
+
+
+        {%- endif -%}
+
+        {%- if list.hasTag('pagination') -%}
+        jQuery('a[data-type="grouped-action"]').each(function(){
+
+            jQuery(this).click(function(event) {
+                event.preventDefault();
+                {%- for element in list.getChildrenByTag('grouped-action') -%}
+
+                if (jQuery(this).data('autocheck')) {
+                    jQuery('input:checkbox').data('type', 'grouped-checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else if (jQuery(this).data('autouncheck')) {
+                        jQuery('input:checkbox').data('type', 'grouped-checkbox').each(function () {
+                            this.checked = false;
+                        });
+                } else {
+                    jQuery('#{{ list.name}} form').prop('action', '{{ element.vars.path }}');
+                    jQuery('#submitFilterButton{{ list.name }}').click();
+                }
+                {%- endfor -%}
+
+            });
+        });
+        {%- endif -%}
+        {%- if list.hasTag('pagination') -%}
+        jQuery('a[data-type="pagination"]').each(function(){
+
+            jQuery(this).click(function(event){
+                event.preventDefault();
+
+                if(jQuery(this).data('page') != '0') {
+                    {%- for element in list.getChildrenByTag('pagination') -%}
+                    {%- set form = attribute(list.form, element.vars.name) -%}
+                    jQuery('#{{ form.currentpage.vars.id }}').prop('value', jQuery(this).data('page'));
+                    jQuery('#{{ form.itemperpage.vars.id }}').prop('value', jQuery(this).data('itemperpage'));
+                    {%- for element in list.getChildrenByTag('order') -%}
+                        {%- set orderform = attribute(list.form, element.vars.name) -%}
+                        jQuery('#{{ orderform.orderby.vars.id }}').prop('value', jQuery(this).data('orderby'));
+                        jQuery('#{{ orderform.orderway.vars.id }}').prop('value', jQuery(this).data('orderway'));
+                    {%- endfor -%}
+                    jQuery('#submitFilterButton{{ list.name }}').click();
+                    {%- endfor -%}
+                }
+            });
+        });
+        {%- endif -%}
+    });
+</script>
+{%-  endblock -%}
+{%- endif -%}
+{%- endblock listview_stript -%}
+
+{%- block listview -%}
+    {{- block('listview_start') -}}
+        {{- block('listview_widget') -}}
+    {{- block('listview_end') -}}
+    {{- block('listview_stript') -}}
+{%- endblock listview -%}
+
+{% block attributes -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock attributes -%}

@@ -1,0 +1,46 @@
+<tr>
+    <td>
+        <div class="{% if form.start.vars.errors|length > 0 %}has-error{% endif %}">
+            <div class='input-group'>
+                {{ form_widget(form.start) }}
+                <span class="input-group-btn">
+                    <button onclick="jQuery('#{{ form.start.vars.id }}').datepicker('show');" type="button" class="btn 
+                    {% if form.start.vars.errors|length > 0 %}
+                        btn-danger
+                    {% else %}
+                        btn-default
+                    {% endif %}">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="{% if form.start.vars.errors|length > 0 %}has-error{% endif %}">
+            <div class='input-group'>
+                {{ form_widget(form.end) }}
+                <span class="input-group-btn">
+                    <button onclick="jQuery('#{{ form.end.vars.id }}').datepicker('show');" type="button" class="btn
+                    {% if form.start.vars.errors|length > 0 %}
+                        btn-danger
+                    {% else %}
+                        btn-default
+                    {% endif %}">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </td>
+    <td><a title="Supprimer" href="#"><span class="glyphicon glyphicon-trash"></span></a></td>
+</tr>
+{% if form.start.vars.errors|length > 0 %}
+    <tr>
+        <td colspan="3">
+            <div class="has-error text-center">
+                {{ form_errors(form.start) }}
+            </div>
+        </td>
+    </tr>
+{% endif %}

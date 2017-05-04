@@ -1,0 +1,5 @@
+{% extends ":" ~ app.request.attributes.get("theme_name") ~ ":base.html.twig" %}
+
+{% block body %}
+{{ "hello_world"|trans }}
+{% endblock %}

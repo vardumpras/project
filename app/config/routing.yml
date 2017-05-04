@@ -1,0 +1,18 @@
+alcyon_core:
+    resource: "@AlcyonCoreBundle/Controller/"
+    type:     annotation
+
+    
+alcyon_backend:
+    resource: "@AlcyonBackendBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+
+alcyon_frontend:
+    resource: "@AlcyonFrontendBundle/Controller/"
+    type:     annotation
+
+alcyon_exemple:
+    resource: "@AlcyonExempleBundle/Controller/"
+    type:     annotation
+    prefix:   /exemple

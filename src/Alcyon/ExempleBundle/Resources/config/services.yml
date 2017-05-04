@@ -1,0 +1,35 @@
+services:
+    alcyon_exemple.form.mediahandle:
+        class:     Alcyon\ExempleBundle\Form\Handle\MediaHandle
+        arguments: [ '@doctrine.orm.entity_manager', '@form.factory', '@request_stack']
+        
+    eventlistener.alcyon_exemple.orm.categorie_listener:
+        class: Alcyon\ExempleBundle\EventListener\ORM\CategorieListener
+        arguments: [ '@router', '@alcyon_core.service.slugify' ]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: postLoad }        
+            
+
+    eventlistener.alcyon_exemple.hook.listener_exemple:
+        class: Alcyon\ExempleBundle\EventListener\Hook\ListenerExemple
+        tags:
+            - { name: alcyon_core.event_listener, event: hookExemple }    
+
+    eventlistener.alcyon_exemple.hook.home_center_listener:
+        class: Alcyon\ExempleBundle\EventListener\Hook\HomeCenterListener
+        tags:
+            - { name: alcyon_core.event_listener, event: home.center, method: renderHomeCenter}   
+
+    eventlistener.alcyon_exemple.hook.home_featured_populaire_listener:
+        class: Alcyon\ExempleBundle\EventListener\Hook\HomeFeaturedPopulaireListener
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: alcyon_core.event_listener, event: home.featured, method: renderHomeFeatured}   
+
+    eventlistener.alcyon_exemple.hook.home_featured_meilleurs_ventes_listener:
+        class: Alcyon\ExempleBundle\EventListener\Hook\HomeFeaturedMeilleursVentesListener
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        tags:
+            - { name: alcyon_core.event_listener, event: home.featured, method: renderHomeFeatured}   

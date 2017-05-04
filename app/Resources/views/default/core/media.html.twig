@@ -1,0 +1,34 @@
+{% extends ":" ~ app.request.attributes.get("theme_name") ~ ":base.html.twig" %}
+
+{% block title %}index{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+
+		{% block media_form %}
+
+
+		    {{ form_row(form.url) }}
+
+
+		    {{ form_row(form.title) }}
+
+		 
+		    {{ form_row(form.alt) }}
+
+		    
+			{{ include('default/core/form/formPeriode.html.twig') }}
+
+
+			{{ form_row(form.send) }}
+
+
+		{% endblock %}
+	{{ form_end(form) }}
+{% endblock %}
+
+{% block script %}
+	{{ parent() }}
+
+{% endblock %}
